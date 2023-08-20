@@ -2,59 +2,51 @@ return {
   t = {
     ["jj"] = { "<C-\\><C-n>" },
     ["<ESC>"] = { "<C-\\><C-n>" },
-  },
-  n = {
-    ["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" },
-    ["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" },
-    -- Smart Split
-    ["<C-h>"] = {
+    -- terminal モード中の画面移動
+    ["<C-k>"] = {
       function()
-        require("smart-splits").move_cursor_left()
+        require("smart-splits").move_cursor_up()
       end,
-      desc = "Move to left split",
     },
     ["<C-j>"] = {
       function()
         require("smart-splits").move_cursor_down()
       end,
-      desc = "Move to below split",
     },
-    ["<C-k>"] = {
+    ["<C-h>"] = {
       function()
-        require("smart-splits").move_cursor_up()
+        require("smart-splits").move_cursor_left()
       end,
-      desc = "Move to above split",
     },
     ["<C-l>"] = {
       function()
         require("smart-splits").move_cursor_right()
       end,
-      desc = "Move to right split",
     },
-    ["<C-Up>"] = {
+  },
+  n = {
+    ["|"] = { "<cmd>vnew<cr><cmd>terminal<cr>", desc = "Vertical Split" },
+    ["\\"] = { "<cmd>new<cr><cmd>terminal<cr>", desc = "Horizontal Split" },
+    -- Smart Split
+    ["<C-h>"] = {
       function()
-        require("smart-splits").resize_up()
+        require("smart-splits").move_cursor_left()
       end,
-      desc = "Resize split up",
     },
-    ["<C-Down>"] = {
+    ["<C-j>"] = {
       function()
-        require("smart-splits").resize_down()
+        require("smart-splits").move_cursor_down()
       end,
-      desc = "Resize split down",
     },
-    ["<C-Left>"] = {
+    ["<C-k>"] = {
       function()
-        require("smart-splits").resize_left()
+        require("smart-splits").move_cursor_up()
       end,
-      desc = "Resize split left",
     },
-    ["<C-Right>"] = {
+    ["<C-l>"] = {
       function()
-        require("smart-splits").resize_right()
+        require("smart-splits").move_cursor_right()
       end,
-      desc = "Resize split right",
     },
   },
 }
-

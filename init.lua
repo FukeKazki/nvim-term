@@ -16,7 +16,7 @@ require("lazy").setup("plugins")
 -- end --
 
 -- colorscheme
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme tokyonight-night]])
 
 -- key mappings
 require("utils").set_mappings(require("mappings"))
