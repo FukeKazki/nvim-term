@@ -4,24 +4,16 @@ return {
     ["<ESC>"] = { "<C-\\><C-n>" },
     -- terminal モード中の画面移動
     ["<C-k>"] = {
-      function()
-        require("smart-splits").move_cursor_up()
-      end,
+      function() require("smart-splits").move_cursor_up() end,
     },
     ["<C-j>"] = {
-      function()
-        require("smart-splits").move_cursor_down()
-      end,
+      function() require("smart-splits").move_cursor_down() end,
     },
     ["<C-h>"] = {
-      function()
-        require("smart-splits").move_cursor_left()
-      end,
+      function() require("smart-splits").move_cursor_left() end,
     },
     ["<C-l>"] = {
-      function()
-        require("smart-splits").move_cursor_right()
-      end,
+      function() require("smart-splits").move_cursor_right() end,
     },
   },
   n = {
