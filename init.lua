@@ -29,3 +29,6 @@ vim.opt.title = true
 vim.opt.swapfile = false
 -- system の clipboard を使う
 vim.opt.clipboard = "unnamedplus"
+-- ステータスラインを表示しない
+vim.opt.laststatus = 0
+vim.opt.cmdheight = 0
