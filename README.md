@@ -7,4 +7,4 @@ graph TD;
 
 #### Link
 
-- [nvim-term](https://github.com/FukeKazki/nvim-term/tree/main)
+- https://github.com/FukeKazki/nvim-term/tree/main
