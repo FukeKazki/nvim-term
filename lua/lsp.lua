@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "gopls" },
+  ensure_installed = { "lua_ls", "gopls", "tsserver" },
 }
 require("mason-lspconfig").setup_handlers {
   function(server_name)
@@ -10,4 +10,14 @@ require("mason-lspconfig").setup_handlers {
 
     require("lspconfig")[server_name].setup(opt)
   end,
+}
+
+-- こっちに寄せる
+require("mason-null-ls").setup {
+  ensure_installed = { "stylua", "jq" },
+  handlers = {},
+}
+-- null-lsには何も設定しない
+require("null-ls").setup {
+  sources = {},
 }

@@ -47,7 +47,20 @@ return {
       { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
     },
   },
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "VeryLazy", -- これがないと動かない
+    config = function() require("nvim-ts-autotag").setup {} end,
+  },
+  {
+    "windwp/nvim-autopairs",
+    event = "VeryLazy",
+    config = function() require("nvim-autopairs").setup() end,
+  },
   {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -103,5 +116,13 @@ return {
         },
       }
     end,
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
   },
 }

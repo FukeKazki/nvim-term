@@ -5,3 +5,8 @@ autocmd("termopen", {
   pattern = "*",
   command = "startinsert",
 })
+
+autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function() vim.lsp.buf.format() end,
+})
