@@ -27,6 +27,9 @@ require("utils").set_mappings(require "mappings")
 -- autocmds
 require "autocmd"
 
+-- lsp
+require "lsp"
+
 -- options
 vim.opt.title = true
 vim.opt.swapfile = false
@@ -39,3 +42,4 @@ vim.opt.clipboard = "unnamedplus"
 -- ステータスラインを一番下に固定
 vim.opt.laststatus = 3
 vim.opt.cmdheight = 4
+
