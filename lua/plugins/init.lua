@@ -1,6 +1,12 @@
 return {
   {
     "mrjones2014/smart-splits.nvim",
+    keys = {
+      { "<Up>", "<cmd>lua require('smart-splits').move_cursor_up()<cr>", desc = "Move cursor up" },
+      { "<Down>", "<cmd>lua require('smart-splits').move_cursor_down()<cr>", desc = "Move cursor down" },
+      { "<Left>", "<cmd>lua require('smart-splits').move_cursor_left()<cr>", desc = "Move cursor left" },
+      { "<Right>", "<cmd>lua require('smart-splits').move_cursor_right()<cr>", desc = "Move cursor right" },
+    },
   },
   {
     "folke/tokyonight.nvim",
@@ -30,6 +36,9 @@ return {
         },
       }
     end,
+    keys = {
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
+    },
   },
   {
     "kdheepak/lazygit.nvim",
@@ -96,6 +105,9 @@ return {
         },
       }
     end,
+    keys = {
+      { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
+    },
   },
   {
     "hrsh7th/nvim-cmp",
@@ -112,7 +124,9 @@ return {
           { name = "nvim_lsp" },
         },
         mapping = {
-          ["<C-n>"] = require("cmp").mapping.select_next_item(),
+          ["<Down>"] = require("cmp").mapping.select_next_item(),
+          ["<Up>"] = require("cmp").mapping.select_prev_item(),
+          ["<CR>"] = require("cmp").mapping.confirm { select = true },
         },
       }
     end,
@@ -124,5 +138,18 @@ return {
       "williamboman/mason.nvim",
       "nvimtools/none-ls.nvim",
     },
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup {
+        panel = { auto_refresh = false },
+        suggestion = { auto_trigger = true, debounce = 150, keymap = {
+          accept = "<Tab>",
+        } },
+      }
+    end,
   },
 }
