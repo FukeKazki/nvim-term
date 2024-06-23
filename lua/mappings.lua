@@ -5,6 +5,9 @@ return {
     ["<Leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Neotree" },
     ["<Leader>q"] = { "<cmd>q<cr>", desc = "Quit" },
     ["<Leader>w"] = { "<cmd>w<cr>", desc = "Write" },
+    ["<Leader>z"] = { "<cmd>ZenMode<cr>", desc = "Zen" },
+    ["<Leader>ff"] = { function() require("telescope.builtin").find_files() end },
+    ["<Leader>fg"] = { function() require("telescope.builtin").live_grep() end },
     ["<Up>"] = {
       function() require("smart-splits").move_cursor_up() end,
     },

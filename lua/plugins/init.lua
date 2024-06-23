@@ -53,4 +53,35 @@ return {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function() require("lualine").setup() end,
+  },
+  {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        window = {
+          width = 0.85,
+          height = 0.85,
+          options = {
+            signcolumn = "no",
+            number = false,
+            relativenumber = false,
+          },
+        },
+        plugins = {
+          options = {
+            laststatus = 0,
+          },
+          tmux = { enabled = true },
+          alacritty = {
+            enabled = true,
+            font = "14", -- font size
+          },
+        },
+      }
+    end,
+  },
 }
