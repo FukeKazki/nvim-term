@@ -1,3 +1,6 @@
+-- スペースをリーダーキーにする
+vim.g.mapleader = " "
+
 -- start lazy --
 local lazypath = vim.fn.stdpath "data" .. "/nvim-term-lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
