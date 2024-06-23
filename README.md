@@ -8,7 +8,3 @@ graph TD;
 #### Link
 
 - https://github.com/FukeKazki/nvim-term/tree/main
-
-#### Plugins
-
-- 
