@@ -76,11 +76,6 @@ return {
     "neovim/nvim-lspconfig",
   },
   {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function() require("lualine").setup() end,
-  },
-  {
     "folke/zen-mode.nvim",
     config = function()
       require("zen-mode").setup {

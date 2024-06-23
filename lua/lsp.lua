@@ -14,7 +14,7 @@ require("mason-lspconfig").setup_handlers {
 
 -- こっちに寄せる
 require("mason-null-ls").setup {
-  ensure_installed = { "stylua", "jq" },
+  ensure_installed = { "stylua", "jq", "prettierd", "eslint_d" },
   handlers = {},
 }
 -- null-lsには何も設定しない
