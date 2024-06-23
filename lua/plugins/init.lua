@@ -84,4 +84,24 @@ return {
       }
     end,
   },
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/vim-vsnip",
+    },
+    config = function()
+      require("cmp").setup {
+        snippet = {
+          expand = function(args) vim.fn["vsnip#anonymous"](args.body) end,
+        },
+        sources = {
+          { name = "nvim_lsp" },
+        },
+        mapping = {
+          ["<C-n>"] = require("cmp").mapping.select_next_item(),
+        },
+      }
+    end,
+  },
 }
