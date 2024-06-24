@@ -8,6 +8,8 @@ require("mason-lspconfig").setup_handlers {
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
     }
 
+    -- tsserver
+    if server_name == "tsserver" then opt.single_file_support = false end
     -- denols
     if server_name == "denols" then opt.root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc") end
 
@@ -17,10 +19,12 @@ require("mason-lspconfig").setup_handlers {
 
 -- こっちに寄せる
 require("mason-null-ls").setup {
-  ensure_installed = { "stylua", "jq", "prettierd", "eslint_d" },
+  ensure_installed = { "stylua", "jq", "prettierd" },
   handlers = {},
 }
--- null-lsには何も設定しない
 require("null-ls").setup {
-  sources = {},
+  sources = {
+    require "none-ls.diagnostics.eslint",
+    require "none-ls.code_actions.eslint",
+  },
 }
