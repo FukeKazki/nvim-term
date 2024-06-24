@@ -1,12 +1,15 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "gopls", "tsserver" },
+  ensure_installed = { "lua_ls", "gopls", "tsserver", "denols" },
 }
 require("mason-lspconfig").setup_handlers {
   function(server_name)
     local opt = {
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
     }
+
+    -- denols
+    if server_name == "denols" then opt.root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc") end
 
     require("lspconfig")[server_name].setup(opt)
   end,
