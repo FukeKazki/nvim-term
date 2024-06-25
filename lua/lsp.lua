@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "gopls", "tsserver", "denols" },
+  ensure_installed = { "lua_ls", "gopls", "tsserver", "denols", "tailwindcss" },
 }
 require("mason-lspconfig").setup_handlers {
   function(server_name)
@@ -9,7 +9,11 @@ require("mason-lspconfig").setup_handlers {
     }
 
     -- tsserver
-    if server_name == "tsserver" then opt.single_file_support = false end
+    if server_name == "tsserver" then
+      opt.root_dir = require("lspconfig.util").root_pattern "tsconfig.json"
+      opt.single_file_support = false
+    end
+
     -- denols
     if server_name == "denols" then opt.root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc") end
 
