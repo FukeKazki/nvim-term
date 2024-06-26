@@ -41,4 +41,4 @@ vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 -- ステータスラインを一番下に固定
 vim.opt.laststatus = 3
-vim.opt.cmdheight = 2
+vim.opt.cmdheight = 0
