@@ -1,6 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "gopls", "tsserver", "denols", "tailwindcss" },
+  ensure_installed = { "lua_ls", "gopls", "tsserver", "denols", "tailwindcss", "perlnavigator" },
 }
 require("mason-lspconfig").setup_handlers {
   function(server_name)
@@ -30,5 +30,6 @@ require("null-ls").setup {
   sources = {
     require "none-ls.diagnostics.eslint",
     require "none-ls.code_actions.eslint",
+    require "none-ls.formatting.eslint",
   },
 }

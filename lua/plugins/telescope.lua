@@ -7,7 +7,13 @@ return {
     { "<leader>fg", function() require("telescope.builtin").live_grep() end },
   },
   config = function()
-    require("telescope").setup {}
+    require("telescope").setup {
+      extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {},
+        },
+      },
+    }
     -- code actionをtelescopeで表示する
     require("telescope").load_extension "ui-select"
   end,
