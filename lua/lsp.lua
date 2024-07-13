@@ -26,10 +26,14 @@ require("mason-null-ls").setup {
   ensure_installed = { "stylua", "jq", "prettierd" },
   handlers = {},
 }
+local null_ls = require "null-ls"
 require("null-ls").setup {
   sources = {
     require "none-ls.diagnostics.eslint",
     require "none-ls.code_actions.eslint",
-    require "none-ls.formatting.eslint",
+    null_ls.builtins.formatting.prettierd.with {
+      condition = function(utils) return utils.root_has_file { ".prettierrc", "prettier.config.js" } end,
+    },
+    -- require "none-ls.formatting.eslint",
   },
 }

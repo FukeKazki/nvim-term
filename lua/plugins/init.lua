@@ -46,20 +46,39 @@ return {
       { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
     },
   },
+  -- {
+  --   "kdheepak/lazygit.nvim",
+  --   cmd = {
+  --     "LazyGit",
+  --     "LazyGitConfig",
+  --     "LazyGitCurrentFile",
+  --     "LazyGitFilter",
+  --     "LazyGitFilterCurrentFile",
+  --   },
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   keys = {
+  --     { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+  --   },
+  -- },
   {
-    "kdheepak/lazygit.nvim",
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
+    "NeogitOrg/neogit",
+    lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+
+      -- Only one of these is needed, not both.
+      "nvim-telescope/telescope.nvim", -- optional
+      "ibhagwan/fzf-lua", -- optional
     },
+    cmd = {
+      "Neogit",
+    },
+    config = function() require("neogit").setup {} end,
     keys = {
-      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+      { "<leader>lg", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
   },
   {
@@ -164,5 +183,9 @@ return {
         pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
       }
     end,
+  },
+  {
+    "anuvyklack/pretty-fold.nvim",
+    config = function() require("pretty-fold").setup() end,
   },
 }
