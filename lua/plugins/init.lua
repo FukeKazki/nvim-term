@@ -46,29 +46,12 @@ return {
       { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
     },
   },
-  -- {
-  --   "kdheepak/lazygit.nvim",
-  --   cmd = {
-  --     "LazyGit",
-  --     "LazyGitConfig",
-  --     "LazyGitCurrentFile",
-  --     "LazyGitFilter",
-  --     "LazyGitFilterCurrentFile",
-  --   },
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --   },
-  --   keys = {
-  --     { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-  --   },
-  -- },
   {
     "NeogitOrg/neogit",
     lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
-
       -- Only one of these is needed, not both.
       "nvim-telescope/telescope.nvim", -- optional
       "ibhagwan/fzf-lua", -- optional
@@ -185,7 +168,19 @@ return {
     end,
   },
   {
-    "anuvyklack/pretty-fold.nvim",
-    config = function() require("pretty-fold").setup() end,
+    "lewis6991/gitsigns.nvim",
+    event = "BufRead",
+    config = function() require("gitsigns").setup() end,
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = {
+      "kevinhwang91/promise-async",
+    },
+    config = function()
+      require("ufo").setup {
+        provider_selector = function(bufnr, filetype, buftype) return { "treesitter", "indent" } end,
+      }
+    end,
   },
 }

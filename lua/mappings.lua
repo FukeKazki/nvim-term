@@ -1,12 +1,3 @@
-local function quickFix()
-  vim.lsp.buf.code_action {
-    context = {
-      only = { "quickfix" },
-    },
-    apply = true,
-  }
-end
-
 return {
   n = {
     ["|"] = { "<cmd>vnew<cr>", desc = "Vertical Split" },
@@ -18,7 +9,6 @@ return {
     ["gr"] = { "<cmd>lua vim.lsp.buf.references()<cr>", desc = "Go to References" },
     -- code Action
     ["<Leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action" },
-    ["<leader>cq"] = { quickFix, desc = "quick fix" },
     -- diagnostic
     ["<Leader>la"] = { "<cmd>lua vim.diagnostic.open_float()<cr>", desc = "Show diagnostic" },
   },

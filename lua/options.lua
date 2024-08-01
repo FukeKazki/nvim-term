@@ -11,3 +11,6 @@ vim.opt.laststatus = 3
 vim.opt.cmdheight = 0
 -- fold
 vim.opt.foldmethod = "manual"
+vim.opt.foldlevel = 99
+vim.opt.foldcolumn = "1"
+vim.opt.foldenable = true
