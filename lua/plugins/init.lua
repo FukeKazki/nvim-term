@@ -32,12 +32,16 @@ return {
       require("neo-tree").setup {
         close_if_last_window = true,
         filesystem = {
-          filterd_items = {
+          filtered_items = {
             hide_dotfiles = false,
-            hide_gitignore = false,
+            hide_gitignored = false,
             never_show = {
               ".DS_Store",
             },
+          },
+          follow_current_file = {
+            enabled = true, -- This will find and focus the file in the active buffer every time
+            leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
           },
         },
       }
@@ -59,7 +63,13 @@ return {
     cmd = {
       "Neogit",
     },
-    config = function() require("neogit").setup {} end,
+    config = function()
+      require("neogit").setup {
+        integration = {
+          diffview = true,
+        },
+      }
+    end,
     keys = {
       { "<leader>lg", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
@@ -170,7 +180,11 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = "BufRead",
-    config = function() require("gitsigns").setup() end,
+    config = function()
+      require("gitsigns").setup {
+        current_line_blame = true,
+      }
+    end,
   },
   {
     "kevinhwang91/nvim-ufo",
