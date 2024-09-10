@@ -178,6 +178,9 @@ return {
     end,
   },
   {
+    "folke/todo-comments.nvim",
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufRead",
     config = function()
