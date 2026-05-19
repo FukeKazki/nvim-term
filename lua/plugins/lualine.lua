@@ -1,5 +1,5 @@
 local lsp_names = function()
-  local clients = vim.lsp.get_active_clients()
+  local clients = (vim.lsp.get_clients or vim.lsp.get_active_clients)()
   local names = {}
   for _, client in pairs(clients) do
     if client.name == "null-ls" then

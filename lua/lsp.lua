@@ -1,9 +1,29 @@
 require("mason").setup()
+
+local custom_capabilities = vim.lsp.protocol.make_client_capabilities()
+custom_capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+
+vim.lsp.config("*", {
+  capabilities = require("cmp_nvim_lsp").default_capabilities(custom_capabilities),
+})
+
+vim.lsp.config("ts_ls", {
+  root_dir = require("lspconfig.util").root_pattern "tsconfig.json",
+  single_file_support = false,
+})
+
+vim.lsp.config("denols", {
+  root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+})
+
 require("mason-lspconfig").setup {
   ensure_installed = {
     "lua_ls",
     "gopls",
-    "tsserver",
+    "ts_ls",
     "denols",
     "tailwindcss",
     "perlnavigator",
@@ -11,29 +31,6 @@ require("mason-lspconfig").setup {
     "mdx_analyzer",
     "eslint", -- null_lsではなくこっちでて入れEslintFixAllが使えるように
   },
-}
-require("mason-lspconfig").setup_handlers {
-  function(server_name)
-    local custom_capabilities = vim.lsp.protocol.make_client_capabilities()
-    custom_capabilities.textDocument.foldingRange = {
-      dynamicRegistration = false,
-      lineFoldingOnly = true,
-    }
-    local opt = {
-      capabilities = require("cmp_nvim_lsp").default_capabilities(custom_capabilities),
-    }
-
-    -- tsserver
-    if server_name == "tsserver" then
-      opt.root_dir = require("lspconfig.util").root_pattern "tsconfig.json"
-      opt.single_file_support = false
-    end
-
-    -- denols
-    if server_name == "denols" then opt.root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc") end
-
-    require("lspconfig")[server_name].setup(opt)
-  end,
 }
 
 -- こっちに寄せる
