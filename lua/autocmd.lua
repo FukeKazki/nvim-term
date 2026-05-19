@@ -5,26 +5,20 @@ autocmd("BufWritePre", {
   callback = function() vim.lsp.buf.format() end,
 })
 
--- switch denols tsserver
+-- switch denols / ts_ls
 autocmd("LspAttach", {
   pattern = "*",
   callback = function(args)
     local bufnr = args.buf
     local curr_client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not curr_client then return end
 
-    if curr_client and curr_client.name == "denols" then
-      local clients = (vim.lsp.get_clients or vim.lsp.get_active_clients) {
-        bufnr = bufnr,
-        name = "tsserver",
-      }
-      for _, client in ipairs(clients) do
+    if curr_client.name == "denols" then
+      for _, client in ipairs(vim.lsp.get_clients { bufnr = bufnr, name = "ts_ls" }) do
         vim.lsp.stop_client(client.id, true)
       end
-    end
-
-    -- if tsserver attached, stop it if there is a denols server attached
-    if curr_client and curr_client.name == "tsserver" then
-      if next((vim.lsp.get_clients or vim.lsp.get_active_clients) { bufnr = bufnr, name = "denols" }) then
+    elseif curr_client.name == "ts_ls" then
+      if next(vim.lsp.get_clients { bufnr = bufnr, name = "denols" }) then
         vim.lsp.stop_client(curr_client.id, true)
       end
     end
