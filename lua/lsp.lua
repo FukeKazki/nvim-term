@@ -22,7 +22,6 @@ vim.lsp.config("denols", {
 require("mason-lspconfig").setup {
   ensure_installed = {
     "lua_ls",
-    "gopls",
     "ts_ls",
     "denols",
     "tailwindcss",
