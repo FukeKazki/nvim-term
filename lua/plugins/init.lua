@@ -203,6 +203,16 @@ return {
     end,
   },
   {
+    "LudoPinelli/comment-box.nvim",
+    cmd = { "CBccbox", "CBline", "CBcatalog" },
+    keys = {
+      { "<Leader>cb", "<cmd>CBccbox<cr>", mode = { "n", "v" }, desc = "Comment Box" },
+      { "<Leader>cl", "<cmd>CBline<cr>", mode = { "n", "v" }, desc = "Comment Line" },
+      { "<Leader>ct", "<cmd>CBcatalog<cr>", desc = "Comment Box Catalog" },
+    },
+    opts = {},
+  },
+  {
     "folke/todo-comments.nvim",
   },
   {
