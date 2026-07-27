@@ -265,6 +265,15 @@ return {
     opts = {},
   },
   {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000, -- 他のハイライトより先に読み込ませて表示が上書きされないようにする
+    config = function()
+      require("tiny-inline-diagnostic").setup()
+      vim.diagnostic.config { virtual_text = false } -- 標準のvirtual_textと二重表示にならないようにする
+    end,
+  },
+  {
     -- GitHubはread-onlyミラーのため公式(Forgejo)を参照: https://git.barrettruth.com/barrettruth/import-cost.nvim
     "https://git.barrettruth.com/barrettruth/import-cost.nvim",
     ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
