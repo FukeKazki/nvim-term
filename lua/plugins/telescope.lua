@@ -5,6 +5,7 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
     "nvim-telescope/telescope-live-grep-args.nvim",
+    "cbochs/grapple.nvim",
   },
   keys = {
     { "<leader>ff", function() require("telescope.builtin").find_files() end },
@@ -15,6 +16,8 @@ return {
       "fc",
       function() require("telescope-live-grep-args.shortcuts").grep_word_under_cursor() end,
     },
+    -- NOTE grappleでタグ付けしたファイル一覧をtelescopeで表示する
+    { "<leader>fm", "<cmd>Telescope grapple tags<cr>", desc = "Grapple Tags" },
   },
   config = function()
     require("telescope").setup {
@@ -27,5 +30,6 @@ return {
     -- code actionをtelescopeで表示する
     require("telescope").load_extension "ui-select"
     require("telescope").load_extension "live_grep_args"
+    require("telescope").load_extension "grapple"
   end,
 }

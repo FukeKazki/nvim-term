@@ -2,10 +2,11 @@ return {
   {
     "mrjones2014/smart-splits.nvim",
     keys = {
-      { "<Up>", "<cmd>lua require('smart-splits').move_cursor_up()<cr>", desc = "Move cursor up" },
-      { "<Down>", "<cmd>lua require('smart-splits').move_cursor_down()<cr>", desc = "Move cursor down" },
-      { "<Left>", "<cmd>lua require('smart-splits').move_cursor_left()<cr>", desc = "Move cursor left" },
-      { "<Right>", "<cmd>lua require('smart-splits').move_cursor_right()<cr>", desc = "Move cursor right" },
+      -- tmux経由(S-矢印がC-hjklとして送られてくる)用
+      { "<C-k>", "<cmd>lua require('smart-splits').move_cursor_up()<cr>", desc = "Move cursor up" },
+      { "<C-j>", "<cmd>lua require('smart-splits').move_cursor_down()<cr>", desc = "Move cursor down" },
+      { "<C-h>", "<cmd>lua require('smart-splits').move_cursor_left()<cr>", desc = "Move cursor left" },
+      { "<C-l>", "<cmd>lua require('smart-splits').move_cursor_right()<cr>", desc = "Move cursor right" },
     },
   },
   {
@@ -43,11 +44,31 @@ return {
             enabled = true, -- This will find and focus the file in the active buffer every time
             leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
           },
+          window = {
+            mappings = {
+              -- カーソル下のノードをgrappleでタグ付け/解除する ("m"はNeo-treeのmove、"H"はtoggle_hiddenと衝突するため"T"を使用)
+              ["T"] = function(state)
+                local node = state.tree:get_node()
+                require("grapple").toggle { path = node.path }
+              end,
+            },
+          },
         },
       }
     end,
     keys = {
       { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
+    },
+  },
+  {
+    "cbochs/grapple.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "<leader>m", function() require("grapple").toggle() end, desc = "Grapple Toggle Tag" },
+      { "]m", function() require("grapple").cycle_tags "next" end, desc = "Grapple Next Tag" },
+      { "[m", function() require("grapple").cycle_tags "prev" end, desc = "Grapple Previous Tag" },
     },
   },
   {
@@ -296,5 +317,72 @@ return {
         provider_selector = function(bufnr, filetype, buftype) return { "treesitter", "indent" } end,
       }
     end,
+  },
+  {
+    -- tmuxの別ペインで起動したclaude/cursor-agentとNeovimを繋ぐ
+    "folke/sidekick.nvim",
+    opts = {
+      cli = {
+        mux = {
+          backend = "tmux",
+          enabled = true,
+        },
+      },
+    },
+    config = function(_, opts)
+      require("sidekick").setup(opts)
+
+      -- opts.cli.toolsはデフォルトとdeep_extendされるだけで削除はできないため、setup後に絞り込む
+      require("sidekick.config").cli.tools = {
+        claude = {},
+        codex = {},
+        copilot = {},
+        cursor = {},
+        gemini = {},
+      }
+
+      -- tool listのpath列をフルパスではなく最後のディレクトリ名だけにする
+      local select_ui = require "sidekick.cli.ui.select"
+      local base_format = select_ui.format
+      select_ui.format = function(state, picker)
+        local parts = base_format(state, picker)
+        if state.session and not picker then
+          local last = parts[#parts]
+          if last then last[1] = vim.fn.fnamemodify(state.session.cwd, ":t") end
+        end
+        return parts
+      end
+    end,
+    keys = {
+      {
+        "<Leader>as",
+        function() require("sidekick.cli").select { filter = { started = true } } end,
+        desc = "Sidekick Select CLI",
+      },
+      { "<Leader>ad", function() require("sidekick.cli").close() end, desc = "Sidekick Detach CLI" },
+      {
+        "<Leader>af",
+        function() require("sidekick.cli").send { msg = "{file}", filter = { started = true } } end,
+        desc = "Sidekick Send File",
+      },
+      {
+        "<Leader>av",
+        function() require("sidekick.cli").send { msg = "{selection}", filter = { started = true } } end,
+        mode = { "x" },
+        desc = "Sidekick Send Visual Selection",
+      },
+      {
+        "<Leader>ap",
+        function()
+          require("sidekick.cli").prompt {
+            cb = function(_, text)
+              if text then require("sidekick.cli").send { text = text, filter = { started = true } } end
+            end,
+          }
+        end,
+        mode = { "n", "x" },
+        desc = "Sidekick Select Prompt",
+      },
+    },
   },
 }
