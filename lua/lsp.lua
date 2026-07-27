@@ -11,12 +11,12 @@ vim.lsp.config("*", {
 })
 
 vim.lsp.config("ts_ls", {
-  root_dir = require("lspconfig.util").root_pattern "tsconfig.json",
+  root_markers = { "tsconfig.json" },
   single_file_support = false,
 })
 
 vim.lsp.config("denols", {
-  root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+  root_markers = { "deno.json", "deno.jsonc" },
 })
 
 require("mason-lspconfig").setup {
