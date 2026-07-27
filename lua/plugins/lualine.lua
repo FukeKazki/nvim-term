@@ -16,6 +16,14 @@ local lsp_names = function()
   return "LSP: " .. table.concat(names, ", ")
 end
 
+local treesitter_status = function()
+  local ok, parser = pcall(vim.treesitter.get_parser, 0)
+  if not ok or not parser then
+    return "TS: -"
+  end
+  return "TS: " .. parser:lang()
+end
+
 local colors = {
   darkgray = "#16161d",
   gray = "#727169",
@@ -34,7 +42,7 @@ return {
   config = function()
     require("lualine").setup {
       sections = {
-        lualine_x = { lsp_names },
+        lualine_x = { lsp_names, treesitter_status },
       },
       options = {
         theme = {

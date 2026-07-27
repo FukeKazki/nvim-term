@@ -78,6 +78,30 @@ return {
     "nvim-treesitter/nvim-treesitter",
     branch = "master", -- telescope.nvim (0.1.8) が旧APIのft_to_langに依存しているため、書き直し版のmainブランチだと落ちる
     build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = {
+          "lua",
+          "vim",
+          "vimdoc",
+          "query",
+          "typescript",
+          "tsx",
+          "javascript",
+          "json",
+          "jsonc",
+          "html",
+          "css",
+          "markdown",
+          "markdown_inline",
+          "astro",
+          "bash",
+        },
+        auto_install = true,
+        highlight = { enable = true },
+        indent = { enable = true },
+      }
+    end,
   },
   {
     "windwp/nvim-ts-autotag",
