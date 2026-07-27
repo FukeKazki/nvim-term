@@ -265,6 +265,11 @@ return {
     opts = {},
   },
   {
+    -- GitHubはread-onlyミラーのため公式(Forgejo)を参照: https://git.barrettruth.com/barrettruth/import-cost.nvim
+    "https://git.barrettruth.com/barrettruth/import-cost.nvim",
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte" },
+  },
+  {
     "kkoomen/vim-doge",
     lazy = false, -- ftplugin/*_doge.vimがFileTypeイベントに間に合うよう遅延ロードしない
     build = ":call doge#install()",
