@@ -11,6 +11,9 @@ return {
     ["<Leader>ca"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action" },
     -- diagnostic
     ["<Leader>la"] = { "<cmd>lua vim.diagnostic.open_float()<cr>", desc = "Show diagnostic" },
+    -- tab切り替え
+    ["<Tab>"] = { "<cmd>tabnext<cr>", desc = "Next Tab" },
+    ["<S-Tab>"] = { "<cmd>tabprevious<cr>", desc = "Previous Tab" },
   },
   i = {
     ["jj"] = { "<C-\\><C-n>" },
