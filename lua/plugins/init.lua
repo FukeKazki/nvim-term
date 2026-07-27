@@ -265,6 +265,14 @@ return {
     opts = {},
   },
   {
+    "kkoomen/vim-doge",
+    lazy = false, -- ftplugin/*_doge.vimがFileTypeイベントに間に合うよう遅延ロードしない
+    build = ":call doge#install()",
+    keys = {
+      { "<Leader>d", "<Plug>(doge-generate)", desc = "Generate Doc" },
+    },
+  },
+  {
     "kevinhwang91/nvim-ufo",
     dependencies = {
       "kevinhwang91/promise-async",
