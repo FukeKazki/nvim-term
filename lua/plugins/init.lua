@@ -170,13 +170,48 @@ return {
     end,
   },
   {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
-      "nvimtools/none-ls-extras.nvim",
-    },
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-tool-installer").setup {
+        ensure_installed = { "stylua", "prettierd", "biome", "oxfmt" },
+      }
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    config = function()
+      require("conform").setup {
+        formatters = {
+          -- プロジェクトに対応する設定ファイルが無い場合はデフォルト設定で強行せず、フォーマッタ自体を使わない
+          biome = { require_cwd = true },
+          oxfmt = {
+            require_cwd = true,
+            -- conformの標準定義はvite.config.ts/jsだけでも対象と判定してしまう
+            -- (vite利用=oxfmt採用とは限らず、eslint等の可能性もあるため)ので、
+            -- oxfmt自身の設定ファイルがある場合のみ対象にする
+            cwd = require("conform.util").root_file { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" },
+          },
+          prettierd = { require_cwd = true },
+        },
+        formatters_by_ft = {
+          lua = { "stylua" },
+          javascript = { "biome", "oxfmt", "prettierd", stop_after_first = true },
+          javascriptreact = { "biome", "oxfmt", "prettierd", stop_after_first = true },
+          typescript = { "biome", "oxfmt", "prettierd", stop_after_first = true },
+          typescriptreact = { "biome", "oxfmt", "prettierd", stop_after_first = true },
+          json = { "biome", "oxfmt", "prettierd", stop_after_first = true },
+          jsonc = { "biome", "oxfmt", "prettierd", stop_after_first = true },
+        },
+        format_on_save = {
+          -- どのフォーマッタも該当しなければ既存のLSPフォーマット(ts_ls/denolsなど)にフォールバック
+          lsp_format = "fallback",
+          timeout_ms = 1000,
+        },
+      }
+    end,
   },
   {
     "zbirenbaum/copilot.lua",

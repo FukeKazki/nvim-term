@@ -1,9 +1,8 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function() vim.lsp.buf.format() end,
-})
+-- 保存時フォーマットは lua/plugins/init.lua の conform.nvim (format_on_save) に委譲。
+-- プロジェクトごとのフォーマッタ切り替え(biome/oxfmt/prettierd)や、どれも無い場合の
+-- LSPフォーマットへのフォールバックは conform 側の設定で完結する。
 
 -- switch denols / ts_ls
 autocmd("LspAttach", {

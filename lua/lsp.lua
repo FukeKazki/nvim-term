@@ -28,30 +28,6 @@ require("mason-lspconfig").setup {
     "perlnavigator",
     "astro",
     "mdx_analyzer",
-    "eslint", -- null_lsではなくこっちでて入れEslintFixAllが使えるように
+    "eslint", -- lintはこちらのネイティブLSPに寄せる(EslintFixAllが使える)
   },
-}
-
--- こっちに寄せる
--- rootにしたい箇所の.null-ls-rootを置く
-local null_ls = require "null-ls"
-require("null-ls").setup {
-  sources = {
-    require("none-ls.diagnostics.eslint").with {
-      condition = function(utils) return utils.root_has_file { ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" } end,
-    },
-    require("none-ls.code_actions.eslint").with {
-      condition = function(utils) return utils.root_has_file { ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" } end,
-    },
-    null_ls.builtins.formatting.prettierd.with {
-      -- .prettierrc.mjsは未サポート
-      condition = function(utils) return utils.root_has_file { ".prettierrc.cjs", ".prettierrc", ".prettierrc.json" } end,
-    },
-    null_ls.builtins.formatting.stylua,
-  },
-}
-
-require("mason-null-ls").setup {
-  ensure_installed = nil,
-  automatic_installation = true,
 }
