@@ -76,6 +76,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master", -- telescope.nvim (0.1.8) が旧APIのft_to_langに依存しているため、書き直し版のmainブランチだと落ちる
     build = ":TSUpdate",
   },
   {
