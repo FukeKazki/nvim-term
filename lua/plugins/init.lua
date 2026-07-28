@@ -212,8 +212,28 @@ return {
             require_cwd = true,
             -- conformの標準定義はvite.config.ts/jsだけでも対象と判定してしまう
             -- (vite利用=oxfmt採用とは限らず、eslint等の可能性もあるため)ので、
-            -- oxfmt自身の設定ファイルがある場合のみ対象にする
-            cwd = require("conform.util").root_file { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" },
+            -- oxfmt自身の設定ファイルがあるか、vite.config.ts側でfmtブロックが
+            -- 設定されている(vite-plus推奨のoxfmt設定方法 https://viteplus.dev/guide/fmt)
+            -- 場合のみ対象にする
+            cwd = function(self, ctx)
+              local util = require "conform.util"
+              local standalone_root = util.root_file { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" }(self, ctx)
+              if standalone_root then return standalone_root end
+
+              local vite_configs = { "vite.config.ts", "vite.config.js", "vite.config.mts", "vite.config.mjs" }
+              local vite_dir = vim.fs.root(ctx.dirname, vite_configs)
+              if not vite_dir then return nil end
+
+              for _, name in ipairs(vite_configs) do
+                local path = vite_dir .. "/" .. name
+                if vim.fn.filereadable(path) == 1 then
+                  local content = table.concat(vim.fn.readfile(path), "\n")
+                  if content:match "fmt%s*:" then return vite_dir end
+                  break
+                end
+              end
+              return nil
+            end,
           },
           prettierd = { require_cwd = true },
         },
